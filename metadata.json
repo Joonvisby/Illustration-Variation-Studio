@@ -1,0 +1,5 @@
+{
+  "name": "Illustration Variation Studio",
+  "description": "Upload an illustration or avatar, provide multiple text prompts, and use the Gemini API to generate creative variations of your image.",
+  "requestFramePermissions": []
+}
