@@ -14,6 +14,15 @@ const App: React.FC = () => {
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
   const [globalError, setGlobalError] = useState<string | null>(null);
 
+  // Debug: Check environment variables
+  React.useEffect(() => {
+    console.log('Environment check:', {
+      API_KEY: process.env.API_KEY ? 'Set' : 'Not set',
+      GEMINI_API_KEY: process.env.GEMINI_API_KEY ? 'Set' : 'Not set',
+      NODE_ENV: process.env.NODE_ENV
+    });
+  }, []);
+
   const handleImageUpload = useCallback((file: File) => {
     setOriginalImage(file);
     setVariations([]);
@@ -58,6 +67,21 @@ const App: React.FC = () => {
   };
   
   const isGenerateButtonDisabled = !originalImage || prompts.every(p => !p.value.trim()) || isGenerating;
+
+  // Check if API key is available
+  const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
+  
+  if (!apiKey) {
+    return (
+      <div className="min-h-screen bg-gray-900 font-sans flex items-center justify-center">
+        <div className="text-center text-white">
+          <h1 className="text-2xl font-bold mb-4">Configuration Error</h1>
+          <p className="text-red-400 mb-4">API key not found. Please check your environment variables.</p>
+          <p className="text-sm text-gray-400">Check the browser console for more details.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-900 font-sans">

@@ -2,12 +2,16 @@
 import { GoogleGenAI, Modality } from "@google/genai";
 import type { GenerateContentResponse } from "@google/genai";
 
+// Get API key from environment variables
+const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
+
 // Ensure the API key is available
-if (!process.env.API_KEY) {
-  throw new Error("API_KEY environment variable not set");
+if (!apiKey) {
+  console.error("API_KEY environment variable not set");
+  throw new Error("API_KEY environment variable not set. Please check your Vercel environment variables.");
 }
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const ai = new GoogleGenAI({ apiKey });
 
 export const generateImageVariation = async (originalImageFile: File, prompt: string): Promise<string> => {
   const imagePart = {
