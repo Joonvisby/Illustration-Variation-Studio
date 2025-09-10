@@ -1,14 +1,13 @@
-import path from 'path';
 import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
+// https://vitejs.dev/config/
 export default defineConfig({
-  define: {
-    'process.env.API_KEY': JSON.stringify(process.env.GEMINI_API_KEY),
-    'process.env.GEMINI_API_KEY': JSON.stringify(process.env.GEMINI_API_KEY)
+  plugins: [react()],
+  build: {
+    outDir: 'dist',
   },
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, '.'),
-    }
-  }
+  server: {
+    port: 3000,
+  },
 });
